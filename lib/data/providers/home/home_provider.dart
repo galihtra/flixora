@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flixora/data/model/models.dart';
 import 'package:flixora/data/services/api_error_mapper.dart';
@@ -16,6 +17,28 @@ class HomeProvider extends ChangeNotifier {
     for (final category in Categories.home) category.path: CategoryState(),
   };
   bool _started = false;
+
+  // ── Hero carousel state ──────────────────────────────────────────────────
+  int _heroIndex = 0;
+  Timer? _heroScrollTimer;
+
+  int get heroIndex => _heroIndex;
+
+  void startHeroAutoScroll() {
+    _heroScrollTimer?.cancel();
+    _heroScrollTimer = Timer.periodic(const Duration(seconds: 5), (_) {
+      if (heroes.length < 2) return;
+      _heroIndex = (_heroIndex + 1) % heroes.length;
+      notifyListeners();
+    });
+  }
+
+  /// Called by the widget when user manually swipes
+  void setHeroIndex(int index) {
+    _heroIndex = index;
+  }
+
+  // ────────────────────────────────────────────────────────────────────────
 
   CategoryState state(CatalogCategory category) => _sections[category.path]!;
   List<MediaItem> get heroes {
@@ -52,5 +75,11 @@ class HomeProvider extends ChangeNotifier {
       section.loading = false;
       notifyListeners();
     }
+  }
+
+  @override
+  void dispose() {
+    _heroScrollTimer?.cancel();
+    super.dispose();
   }
 }

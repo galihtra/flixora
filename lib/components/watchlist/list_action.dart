@@ -25,7 +25,8 @@ class ListAction extends StatelessWidget {
         style: TextStyle(fontSize: 13.sp),
       ),
       style: OutlinedButton.styleFrom(
-        minimumSize: Size(fullWidth ? double.infinity : 0, 46.h),
+        minimumSize: Size(fullWidth ? double.infinity : 0, 38.h),
+        padding: EdgeInsets.symmetric(horizontal: 12.w),
         side: const BorderSide(color: AppColors.white54),
         foregroundColor: AppColors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.r)),

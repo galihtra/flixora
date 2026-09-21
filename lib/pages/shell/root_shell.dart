@@ -19,49 +19,75 @@ class AppShell extends StatelessWidget {
     };
     return Scaffold(
       body: child,
-      bottomNavigationBar: NavigationBar(
-        height: (54.h + MediaQuery.textScalerOf(context).scale(12.sp)).clamp(
-          64.0,
-          100.0,
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
         ),
-        labelBehavior:
-            MediaQuery.sizeOf(context).width < 360 ||
-                MediaQuery.textScalerOf(context).scale(12.sp) > 20
-            ? NavigationDestinationLabelBehavior.alwaysHide
-            : NavigationDestinationLabelBehavior.alwaysShow,
-        backgroundColor: AppColors.navigation,
-        indicatorColor: AppColors.accent.withValues(alpha: .16),
-        selectedIndex: index,
-        onDestinationSelected: (value) => context.go(
-          [
-            AppRoutes.home,
-            AppRoutes.movies,
-            AppRoutes.tv,
-            AppRoutes.myList,
-          ][value],
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: AppColors.navigation,
+          selectedItemColor: AppColors.white,
+          unselectedItemColor: AppColors.white54,
+          selectedFontSize: 11.sp,
+          unselectedFontSize: 11.sp,
+          iconSize: 26.r,
+          currentIndex: index,
+          onTap: (value) => context.go(
+            [
+              AppRoutes.home,
+              AppRoutes.movies,
+              AppRoutes.tv,
+              AppRoutes.myList,
+            ][value],
+          ),
+          items: const [
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(bottom: 4),
+                child: Icon(Icons.home_outlined),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.only(bottom: 4),
+                child: Icon(Icons.home),
+              ),
+              label: AppStrings.home,
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(bottom: 4),
+                child: Icon(Icons.movie_outlined),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.only(bottom: 4),
+                child: Icon(Icons.movie),
+              ),
+              label: AppStrings.movies,
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(bottom: 4),
+                child: Icon(Icons.live_tv_outlined),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.only(bottom: 4),
+                child: Icon(Icons.live_tv),
+              ),
+              label: AppStrings.tvShows,
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(bottom: 4),
+                child: Icon(Icons.bookmark_border),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.only(bottom: 4),
+                child: Icon(Icons.bookmark),
+              ),
+              label: AppStrings.myList,
+            ),
+          ],
         ),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: AppStrings.home,
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.movie_outlined),
-            selectedIcon: Icon(Icons.movie),
-            label: AppStrings.movies,
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.live_tv_outlined),
-            selectedIcon: Icon(Icons.live_tv),
-            label: AppStrings.tvShows,
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.bookmark_border),
-            selectedIcon: Icon(Icons.bookmark),
-            label: AppStrings.myList,
-          ),
-        ],
       ),
     );
   }

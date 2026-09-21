@@ -40,6 +40,6 @@ abstract final class AppLayout {
 
   static double heroHeight(BuildContext context) {
     final screen = MediaQuery.sizeOf(context);
-    return math.min(450.h, math.max(290.r, screen.height * .58));
+    return math.min(430.h, math.max(260.r, screen.height * .56));
   }
 }

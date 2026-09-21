@@ -1,3 +1,4 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -25,8 +26,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) => SafeArea(
-    child: RefreshIndicator(
-      color: AppColors.accent,
+    child: EasyRefresh(
+      header: ClassicHeader(
+        dragText: 'Pull to refresh',
+        armedText: 'Release to refresh',
+        readyText: 'Refreshing...',
+        processingText: 'Refreshing...',
+        processedText: 'Done!',
+        iconTheme: const IconThemeData(color: AppColors.accent),
+        textStyle: TextStyle(
+          color: AppColors.muted,
+          fontSize: 12.sp,
+        ),
+      ),
       onRefresh: () => context.read<HomeProvider>().refresh(),
       child: CustomScrollView(
         slivers: [

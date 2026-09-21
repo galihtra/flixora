@@ -20,13 +20,38 @@ class HeroCarousel extends StatefulWidget {
 }
 
 class _HeroCarouselState extends State<HeroCarousel> {
-  int active = 0;
   final PageController _controller = PageController(viewportFraction: .91);
+  late final HomeProvider _provider;
+
+  @override
+  void initState() {
+    super.initState();
+    _provider = context.read<HomeProvider>();
+    _provider.addListener(_syncPage);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _provider.startHeroAutoScroll();
+    });
+  }
+
+  void _syncPage() {
+    if (!_controller.hasClients) return;
+    final target = _provider.heroIndex;
+    if ((_controller.page?.round() ?? 0) != target) {
+      _controller.animateToPage(
+        target,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   @override
   void dispose() {
+    _provider.removeListener(_syncPage);
     _controller.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +92,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
           child: PageView.builder(
             itemCount: items.length,
             controller: _controller,
-            onPageChanged: (value) => setState(() => active = value),
+            onPageChanged: (value) => _provider.setHeroIndex(value),
             itemBuilder: (context, index) {
               final item = items[index];
               return Padding(
@@ -135,6 +160,13 @@ class _HeroCarouselState extends State<HeroCarousel> {
                               children: [
                                 Expanded(
                                   child: FilledButton.icon(
+                                    style: FilledButton.styleFrom(
+                                      minimumSize: Size(double.infinity, 38.h),
+                                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6.r),
+                                      ),
+                                    ),
                                     onPressed: () => openDetail(
                                       context,
                                       item,
@@ -142,7 +174,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
                                     ),
                                     icon: Icon(
                                       Icons.info_outline_rounded,
-                                      size: 18.r,
+                                      size: 16.r,
                                     ),
                                     label: Text(
                                       AppStrings.details,
@@ -178,11 +210,11 @@ class _HeroCarouselState extends State<HeroCarousel> {
             items.length,
             (index) => AnimatedContainer(
               duration: const Duration(milliseconds: 220),
-              width: active == index ? 20.w : 5.w,
+              width: _provider.heroIndex == index ? 20.w : 5.w,
               height: 5.h,
               margin: EdgeInsets.symmetric(horizontal: 3.w),
               decoration: BoxDecoration(
-                color: active == index ? AppColors.accent : AppColors.white38,
+                color: _provider.heroIndex == index ? AppColors.accent : AppColors.white38,
                 borderRadius: BorderRadius.circular(3.r),
               ),
             ),
