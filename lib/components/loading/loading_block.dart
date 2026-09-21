@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flixora/resources/colors_app.dart';
 
@@ -19,7 +20,7 @@ class LoadingBlock extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(radius),
+        borderRadius: BorderRadius.circular(radius.r),
       ),
     );
     if (MediaQuery.disableAnimationsOf(context)) return block;

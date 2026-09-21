@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flixora/app/navigation.dart';
 import 'package:flixora/data/model/models.dart';
@@ -33,7 +34,7 @@ class DetailScreen extends StatelessWidget {
         slivers: [
           SliverAppBar(
             pinned: true,
-            expandedHeight: screen.width * 9 / 16 + 44,
+            expandedHeight: screen.width * 9 / 16 + 44.h,
             backgroundColor: AppColors.background,
             flexibleSpace: FlexibleSpaceBar(
               background: Stack(
@@ -43,7 +44,7 @@ class DetailScreen extends StatelessWidget {
                     path: item.backdropPath ?? item.posterPath,
                     backdrop: item.backdropPath != null,
                     width: screen.width,
-                    height: screen.width * 9 / 16 + 44,
+                    height: screen.width * 9 / 16 + 44.h,
                   ),
                   const DecoratedBox(
                     decoration: BoxDecoration(
@@ -65,7 +66,7 @@ class DetailScreen extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
+              padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 32.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -73,50 +74,50 @@ class DetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(5.r),
                         child: Artwork(
                           path: item.posterPath,
-                          width: 104,
-                          height: 156,
+                          width: 104.w,
+                          height: 156.w,
                           heroTag: args?.heroTag,
                         ),
                       ),
-                      const SizedBox(width: 16),
+                      SizedBox(width: 16.w),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 4,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 8.w,
+                                vertical: 4.h,
                               ),
                               decoration: BoxDecoration(
                                 color: AppColors.accent,
-                                borderRadius: BorderRadius.circular(3),
+                                borderRadius: BorderRadius.circular(3.r),
                               ),
                               child: Text(
                                 item.type.label.toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 10,
+                                style: TextStyle(
+                                  fontSize: 10.sp,
                                   fontWeight: FontWeight.w800,
-                                  letterSpacing: 1,
+                                  letterSpacing: 1.sp,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 10),
+                            SizedBox(height: 10.h),
                             Text(
                               item.title,
-                              style: const TextStyle(
-                                fontSize: 25,
+                              style: TextStyle(
+                                fontSize: 25.sp,
                                 fontWeight: FontWeight.w900,
                                 height: 1.07,
                               ),
                             ),
-                            const SizedBox(height: 11),
+                            SizedBox(height: 11.h),
                             Wrap(
-                              spacing: 8,
-                              runSpacing: 5,
+                              spacing: 8.w,
+                              runSpacing: 5.h,
                               children: [
                                 Text(
                                   item.year,
@@ -139,52 +140,53 @@ class DetailScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 23),
-                  Row(
+                  SizedBox(height: 23.h),
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 5.w,
+                    runSpacing: 5.h,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.star_rounded,
                         color: AppColors.rating,
-                        size: 26,
+                        size: 26.r,
                       ),
-                      const SizedBox(width: 5),
                       Text(
                         item.rating.toStringAsFixed(1),
-                        style: const TextStyle(
-                          fontSize: 21,
+                        style: TextStyle(
+                          fontSize: 21.sp,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
-                      const SizedBox(width: 5),
-                      const Text(
+                      Text(
                         '/ 10',
-                        style: TextStyle(color: AppColors.muted),
+                        style: TextStyle(
+                          color: AppColors.muted,
+                          fontSize: 14.sp,
+                        ),
                       ),
-                      if (item.voteCount > 0) ...[
-                        const SizedBox(width: 12),
+                      if (item.voteCount > 0)
                         Text(
                           '(${item.voteCount} votes)',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: AppColors.muted,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                           ),
                         ),
-                      ],
-                      const Spacer(),
-                      const Text(
+                      Text(
                         AppStrings.tmdb,
                         style: TextStyle(
                           color: AppColors.muted,
-                          fontSize: 11,
+                          fontSize: 11.sp,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 19),
+                  SizedBox(height: 19.h),
                   ListAction(item: item, fullWidth: true),
                   if (provider.error != null) ...[
-                    const SizedBox(height: 14),
+                    SizedBox(height: 14.h),
                     ErrorMessage(
                       error: provider.error!,
                       retry: provider.load,
@@ -192,59 +194,62 @@ class DetailScreen extends StatelessWidget {
                     ),
                   ],
                   if (provider.loading) ...[
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18.h),
                     const LinearProgressIndicator(
                       color: AppColors.accent,
                       backgroundColor: AppColors.surface,
                     ),
                   ],
                   if (detail != null && detail.genres.isNotEmpty) ...[
-                    const SizedBox(height: 25),
+                    SizedBox(height: 25.h),
                     Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
+                      spacing: 8.w,
+                      runSpacing: 8.h,
                       children: detail.genres
                           .map(
                             (genre) => Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 11,
-                                vertical: 7,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 11.w,
+                                vertical: 7.h,
                               ),
                               decoration: BoxDecoration(
                                 color: AppColors.surface,
-                                borderRadius: BorderRadius.circular(4),
+                                borderRadius: BorderRadius.circular(4.r),
                               ),
                               child: Text(
                                 genre,
-                                style: const TextStyle(fontSize: 12),
+                                style: TextStyle(fontSize: 12.sp),
                               ),
                             ),
                           )
                           .toList(),
                     ),
                   ],
-                  const SizedBox(height: 27),
-                  const Text(
+                  SizedBox(height: 27.h),
+                  Text(
                     AppStrings.overview,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                    style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                  const SizedBox(height: 9),
+                  SizedBox(height: 9.h),
                   Text(
                     item.overview.isEmpty
                         ? AppStrings.noOverview
                         : item.overview,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppColors.bodyText,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       height: 1.6,
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30.h),
                   const Divider(color: AppColors.white24),
-                  const SizedBox(height: 10),
-                  const Text(
+                  SizedBox(height: 10.h),
+                  Text(
                     AppStrings.discoverMore,
-                    style: TextStyle(color: AppColors.muted, fontSize: 12),
+                    style: TextStyle(color: AppColors.muted, fontSize: 12.sp),
                   ),
                 ],
               ),

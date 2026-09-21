@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flixora/app/app_router.dart';
 import 'package:flixora/data/repositories/media_repository.dart';
@@ -19,6 +20,7 @@ class _FlixoraAppState extends State<FlixoraApp> {
   late final HomeProvider home = HomeProvider(widget.repository);
   late final WatchlistProvider watchlist = WatchlistProvider(
     PreferencesWatchlistStore(),
+    repository: widget.repository,
   )..load();
   late final router = createAppRouter(widget.repository);
 
@@ -37,11 +39,16 @@ class _FlixoraAppState extends State<FlixoraApp> {
       ChangeNotifierProvider<HomeProvider>.value(value: home),
       ChangeNotifierProvider<WatchlistProvider>.value(value: watchlist),
     ],
-    child: MaterialApp.router(
-      title: AppStrings.appName,
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
-      routerConfig: router,
+    child: ScreenUtilInit(
+      designSize: const Size(390, 844),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => MaterialApp.router(
+        title: AppStrings.appName,
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.dark,
+        routerConfig: router,
+      ),
     ),
   );
 }

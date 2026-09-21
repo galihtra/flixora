@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flixora/resources/layout_app.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flixora/app/app_routes.dart';
@@ -20,14 +22,14 @@ class CategoryRail extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 18, 12, 12),
+          padding: EdgeInsets.fromLTRB(20.w, 18.h, 12.w, 12.h),
           child: Row(
             children: [
               Expanded(
                 child: Text(
                   category.title,
-                  style: const TextStyle(
-                    fontSize: 19,
+                  style: TextStyle(
+                    fontSize: 19.sp,
                     fontWeight: FontWeight.w800,
                     letterSpacing: -.35,
                   ),
@@ -35,9 +37,9 @@ class CategoryRail extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () => context.push(AppRoutes.category(category)),
-                child: const Text(
+                child: Text(
                   AppStrings.seeAll,
-                  style: TextStyle(color: AppColors.muted, fontSize: 12),
+                  style: TextStyle(color: AppColors.muted, fontSize: 12.sp),
                 ),
               ),
             ],
@@ -45,12 +47,15 @@ class CategoryRail extends StatelessWidget {
         ),
         if (state.items.isNotEmpty)
           SizedBox(
-            height: 226,
+            height: AppLayout.posterTileHeight(
+              context,
+              AppLayout.railPosterWidth,
+            ),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               itemCount: state.items.length,
-              separatorBuilder: (_, _) => const SizedBox(width: 10),
+              separatorBuilder: (_, _) => SizedBox(width: 10.w),
               itemBuilder: (_, index) =>
                   PosterCard(item: state.items[index], scope: category.path),
             ),
@@ -64,8 +69,8 @@ class CategoryRail extends StatelessWidget {
         else if (state.loading)
           const PosterSkeletonRow()
         else
-          const SizedBox(height: 40),
-        const SizedBox(height: 5),
+          SizedBox(height: 40.h),
+        SizedBox(height: 5.h),
       ],
     );
   }

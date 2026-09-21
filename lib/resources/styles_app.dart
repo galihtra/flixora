@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flixora/resources/colors_app.dart';
 
 abstract final class AppTheme {
@@ -10,9 +11,14 @@ abstract final class AppTheme {
       primary: AppColors.accent,
       surface: AppColors.surface,
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       backgroundColor: AppColors.background,
       foregroundColor: AppColors.white,
+      titleTextStyle: TextStyle(
+        color: AppColors.white,
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w700,
+      ),
     ),
     navigationBarTheme: NavigationBarThemeData(
       iconTheme: WidgetStateProperty.resolveWith(
@@ -23,22 +29,31 @@ abstract final class AppTheme {
         ),
       ),
     ),
-    textTheme: const TextTheme(
-      headlineLarge: TextStyle(fontWeight: FontWeight.w800, letterSpacing: -.8),
+    textTheme: TextTheme(
+      headlineLarge: TextStyle(
+        fontSize: 32.sp,
+        fontWeight: FontWeight.w800,
+        letterSpacing: -.8,
+      ),
       headlineMedium: TextStyle(
+        fontSize: 26.sp,
         fontWeight: FontWeight.w800,
         letterSpacing: -.6,
       ),
-      titleLarge: TextStyle(fontWeight: FontWeight.w800, letterSpacing: -.3),
-      titleMedium: TextStyle(fontWeight: FontWeight.w700),
-      bodyMedium: TextStyle(height: 1.45),
+      titleLarge: TextStyle(
+        fontSize: 22.sp,
+        fontWeight: FontWeight.w800,
+        letterSpacing: -.3,
+      ),
+      titleMedium: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700),
+      bodyMedium: TextStyle(fontSize: 14.sp, height: 1.45),
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         backgroundColor: AppColors.accent,
         foregroundColor: AppColors.white,
-        minimumSize: const Size(48, 48),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+        minimumSize: Size(48.w, 48.h),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.r)),
       ),
     ),
   );

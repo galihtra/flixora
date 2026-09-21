@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flixora/components/loading/loading_block.dart';
 
 class DetailSkeleton extends StatelessWidget {
@@ -12,19 +13,19 @@ class DetailSkeleton extends StatelessWidget {
         children: [
           LoadingBlock(width: width, height: width * 9 / 16, radius: 0),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(20.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const LoadingBlock(width: 180, height: 28),
-                const SizedBox(height: 16),
-                const LoadingBlock(width: 115, height: 18),
-                const SizedBox(height: 25),
-                LoadingBlock(width: width - 40, height: 48),
-                const SizedBox(height: 30),
-                const LoadingBlock(width: 135, height: 22),
-                const SizedBox(height: 14),
-                LoadingBlock(width: width - 40, height: 100),
+                LoadingBlock(width: 180.w, height: 28.h),
+                SizedBox(height: 16.h),
+                LoadingBlock(width: 115.w, height: 18.h),
+                SizedBox(height: 25.h),
+                LoadingBlock(width: width - 40.w, height: 48.h),
+                SizedBox(height: 30.h),
+                LoadingBlock(width: 135.w, height: 22.h),
+                SizedBox(height: 14.h),
+                LoadingBlock(width: width - 40.w, height: 100.h),
               ],
             ),
           ),

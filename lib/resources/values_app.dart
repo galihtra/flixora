@@ -1,5 +1,4 @@
 abstract final class AppValues {
-  static const tmdbToken = String.fromEnvironment('TMDB_TOKEN');
   static const apiBaseUrl = 'https://api.themoviedb.org/3';
   static const imageBaseUrl = 'https://image.tmdb.org/t/p/';
   static const watchlistKey = 'flixora.watchlist.v1';

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flixora/resources/layout_app.dart';
 import 'package:flixora/app/navigation.dart';
 import 'package:flixora/data/model/models.dart';
 import 'package:flixora/base_widgets/image/artwork.dart';
@@ -11,68 +13,69 @@ class PosterCard extends StatelessWidget {
     super.key,
     required this.item,
     required this.scope,
-    this.width = 120,
+    this.width,
   });
   final MediaItem item;
   final String scope;
-  final double width;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     final tag = '$scope-${item.key}';
+    final cardWidth = width ?? AppLayout.railPosterWidth;
     return Semantics(
       button: true,
       label: AppStrings.openTitle(item.title),
       child: InkWell(
         onTap: () => openDetail(context, item, tag),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(5.r),
         child: SizedBox(
-          width: width,
+          width: cardWidth,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(5.r),
                 child: Artwork(
                   path: item.posterPath,
-                  width: width,
-                  height: width * AppValues.posterRatio,
+                  width: cardWidth,
+                  height: cardWidth * AppValues.posterRatio,
                   heroTag: tag,
                 ),
               ),
-              const SizedBox(height: 7),
+              SizedBox(height: 7.h),
               Text(
                 item.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 12,
+                style: TextStyle(
+                  fontSize: AppLayout.posterTitleSize,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2.h),
               Row(
                 children: [
-                  const Icon(
-                    Icons.star_rounded,
-                    color: AppColors.rating,
-                    size: 13,
-                  ),
-                  const SizedBox(width: 2),
-                  Text(
-                    item.rating.toStringAsFixed(1),
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: AppColors.muted,
+                  Icon(Icons.star_rounded, color: AppColors.rating, size: 13.r),
+                  SizedBox(width: 2.w),
+                  Flexible(
+                    child: Text(
+                      item.rating.toStringAsFixed(1),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: AppLayout.posterMetaSize,
+                        color: AppColors.muted,
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 7),
+                  SizedBox(width: 7.w),
                   Flexible(
                     child: Text(
                       item.year,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 11,
+                      style: TextStyle(
+                        fontSize: AppLayout.posterMetaSize,
                         color: AppColors.muted,
                       ),
                     ),

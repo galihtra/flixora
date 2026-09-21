@@ -1,5 +1,6 @@
-import 'package:flixora/resources/values_app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flixora/resources/layout_app.dart';
 import 'package:provider/provider.dart';
 import 'package:flixora/data/model/models.dart';
 import 'package:flixora/components/loading/poster_grid_skeleton.dart';
@@ -42,6 +43,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
       appBar: AppBar(
         title: Text(
           widget.category.title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontWeight: FontWeight.w800),
         ),
       ),
@@ -62,19 +65,34 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 controller: _scroll,
                 slivers: [
                   SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+                    padding: EdgeInsets.fromLTRB(
+                      AppLayout.pageInset,
+                      12.h,
+                      AppLayout.pageInset,
+                      16.h,
+                    ),
                     sliver: SliverLayoutBuilder(
                       builder: (context, constraints) {
-                        final width = (constraints.crossAxisExtent - 20) / 3;
+                        final available =
+                            constraints.crossAxisExtent +
+                            2 * AppLayout.pageInset;
+                        final columns = AppLayout.columns(available);
+                        final gap = AppLayout.gridGap;
+                        final width =
+                            (constraints.crossAxisExtent -
+                                (columns - 1) * gap) /
+                            columns;
                         return SliverGrid.builder(
                           itemCount: provider.items.length,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 15,
-                                mainAxisExtent:
-                                    width * AppValues.posterRatio + 40,
+                                crossAxisCount: columns,
+                                crossAxisSpacing: gap,
+                                mainAxisSpacing: AppLayout.rowGap,
+                                mainAxisExtent: AppLayout.posterTileHeight(
+                                  context,
+                                  width,
+                                ),
                               ),
                           itemBuilder: (context, index) => PosterCard(
                             item: provider.items[index],
@@ -87,8 +105,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ),
                   SliverToBoxAdapter(
                     child: provider.isLoadingMore
-                        ? const Padding(
-                            padding: EdgeInsets.all(20),
+                        ? Padding(
+                            padding: EdgeInsets.all(20.r),
                             child: Center(child: CircularProgressIndicator()),
                           )
                         : provider.loadMoreError != null
@@ -97,7 +115,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             compact: true,
                             retry: provider.retryLoadMore,
                           )
-                        : const SizedBox(height: 18),
+                        : SizedBox(height: 18.h),
                   ),
                 ],
               ),

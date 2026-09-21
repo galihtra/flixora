@@ -1,0 +1,5 @@
+// Local TMDB configuration. Keep this file out of Git.
+abstract final class AppConfig {
+  static const tmdbToken =
+      "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMzQyOTFiNTdlNTcxZGY4ZWExMWE0NTUwMWRmNjBjMiIsIm5iZiI6MTYxMDc2MjQ4Ni4wNDQ5OTk4LCJzdWIiOiI2MDAyNDhmNmQ0MGQ0YzAwM2Y1NWE4ZWMiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.B-IgK5XZPyhIkSqPTtZnufOlO3uUGIVocBSTJd7Ei-I";
+}

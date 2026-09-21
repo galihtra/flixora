@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flixora/data/repositories/media_repository.dart';
 import 'package:flixora/resources/colors_app.dart';
@@ -44,6 +45,6 @@ class Artwork extends StatelessWidget {
   Widget _placeholder() => Container(
     color: AppColors.surface,
     alignment: Alignment.center,
-    child: const Icon(Icons.movie_outlined, size: 42, color: AppColors.white38),
+    child: Icon(Icons.movie_outlined, size: 42.r, color: AppColors.white38),
   );
 }

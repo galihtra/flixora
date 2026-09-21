@@ -11,6 +11,7 @@ An Android movie and TV discovery app built with Flutter. FLIXORA uses the TMDB 
 - Offline My List stored with `shared_preferences`
 - Shimmer loading, pull-to-refresh, image cache, bounded retries, and contextual error states
 - Native Android splash screen and FLIXORA icon
+- Responsive layouts with `flutter_screenutil`, adaptive poster grids, and overflow checks for phone, tablet, landscape, and larger text
 
 ## Requirements
 
@@ -18,25 +19,19 @@ An Android movie and TV discovery app built with Flutter. FLIXORA uses the TMDB 
 - Android SDK for Android builds
 - A TMDB API Read Access Token from [TMDB API settings](https://www.themoviedb.org/settings/api)
 
-## Configure the token
+## Configure TMDB
 
-Copy `config/tmdb.example.json` to `config/tmdb.local.json`, then replace the placeholder with your TMDB API Read Access Token. The local file is ignored by Git. Do not commit or share the token.
+For a new checkout, copy `lib/resources/config_app.example.dart` to `lib/resources/config_app.dart` and set `AppConfig.tmdbToken` to your TMDB API Read Access Token. The local config file is ignored by Git. Keep the token private.
 
 ```sh
-cp config/tmdb.example.json config/tmdb.local.json
+cp -n lib/resources/config_app.example.dart lib/resources/config_app.dart
 flutter pub get
-flutter run --dart-define-from-file=config/tmdb.local.json
+flutter run
 ```
 
-The same configuration is required for a functional Android APK:
+For an Android APK, run `flutter build apk --release`. The APK will be at `build/app/outputs/flutter-apk/app-release.apk`. The project uses a debug signing key for local release builds; configure your own signing key before distributing an APK. The token is compiled into the app, so protect any APK you distribute and use appropriate TMDB token restrictions.
 
-```sh
-flutter build apk --release --dart-define-from-file=config/tmdb.local.json
-```
-
-The APK will be at `build/app/outputs/flutter-apk/app-release.apk`. The project uses a debug signing key for local release builds; configure your own signing key before distributing an APK.
-
-If no token is provided, the app still opens and shows a service configuration message. My List remains accessible offline.
+If the token is empty, the app opens and shows a service configuration message. My List remains accessible offline.
 
 ## Architecture
 
@@ -64,9 +59,9 @@ API requests use a 10 s connection timeout, 20 s receive timeout, and 10 s send 
 ```sh
 flutter analyze
 flutter test
-flutter build apk --debug --dart-define-from-file=config/tmdb.local.json
+flutter build apk --debug
 ```
 
-The tests cover API error mapping, debounced search with stale response protection, and My List persistence.
+The tests cover API error mapping, debounced search with stale response protection, My List persistence, and viewport overflow checks across seven screen and text-scale combinations.
 
 This product uses the TMDB API but is not endorsed or certified by TMDB.

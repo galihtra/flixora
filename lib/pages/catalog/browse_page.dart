@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flixora/data/model/models.dart';
 import 'package:flixora/data/providers/home/home_provider.dart';
@@ -43,7 +44,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
+                padding: EdgeInsets.fromLTRB(20.w, 14.h, 20.w, 24.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -51,16 +52,16 @@ class _BrowseScreenState extends State<BrowseScreen> {
                       widget.type == MediaType.movie
                           ? AppStrings.moviesTagline
                           : AppStrings.tvTagline,
-                      style: const TextStyle(
-                        fontSize: 27,
+                      style: TextStyle(
+                        fontSize: 27.sp,
                         fontWeight: FontWeight.w800,
                         letterSpacing: -.7,
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    const Text(
+                    SizedBox(height: 6.h),
+                    Text(
                       AppStrings.exploreTmdb,
-                      style: TextStyle(color: AppColors.muted),
+                      style: TextStyle(color: AppColors.muted, fontSize: 14.sp),
                     ),
                   ],
                 ),
@@ -68,7 +69,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
             ),
             for (final category in categories)
               SliverToBoxAdapter(child: CategoryRail(category: category)),
-            const SliverToBoxAdapter(child: SizedBox(height: 30)),
+            SliverToBoxAdapter(child: SizedBox(height: 30.h)),
           ],
         ),
       ),

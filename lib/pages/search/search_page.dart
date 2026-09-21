@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flixora/resources/layout_app.dart';
 import 'package:provider/provider.dart';
 import 'package:flixora/components/loading/poster_grid_skeleton.dart';
 import 'package:flixora/components/network_error/error_message.dart';
@@ -7,7 +9,6 @@ import 'package:flixora/components/poster/poster_card.dart';
 import 'package:flixora/data/providers/search/search_provider.dart';
 import 'package:flixora/resources/colors_app.dart';
 import 'package:flixora/resources/strings_app.dart';
-import 'package:flixora/resources/values_app.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -48,7 +49,7 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(18, 4, 18, 18),
+            padding: EdgeInsets.fromLTRB(18.w, 4.h, 18.w, 18.h),
             child: TextField(
               controller: _controller,
               autofocus: true,
@@ -70,7 +71,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 filled: true,
                 fillColor: AppColors.surface,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                   borderSide: BorderSide.none,
                 ),
               ),
@@ -117,19 +118,27 @@ class _SearchScreenState extends State<SearchScreen> {
         message: AppStrings.noResultsBody,
       );
     }
-    final width = (MediaQuery.sizeOf(context).width - 52) / 3;
+    final available = MediaQuery.sizeOf(context).width;
+    final columns = AppLayout.columns(available);
+    final gap = AppLayout.gridGap;
+    final width = AppLayout.posterWidth(available);
     return CustomScrollView(
       controller: _scroll,
       slivers: [
         SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          padding: EdgeInsets.fromLTRB(
+            AppLayout.pageInset,
+            0,
+            AppLayout.pageInset,
+            16.h,
+          ),
           sliver: SliverGrid.builder(
             itemCount: provider.items.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 15,
-              mainAxisExtent: width * AppValues.posterRatio + 40,
+              crossAxisCount: columns,
+              crossAxisSpacing: gap,
+              mainAxisSpacing: AppLayout.rowGap,
+              mainAxisExtent: AppLayout.posterTileHeight(context, width),
             ),
             itemBuilder: (context, index) => PosterCard(
               item: provider.items[index],
@@ -140,8 +149,8 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
         SliverToBoxAdapter(
           child: provider.loadingMore
-              ? const Padding(
-                  padding: EdgeInsets.all(20),
+              ? Padding(
+                  padding: EdgeInsets.all(20.r),
                   child: Center(child: CircularProgressIndicator()),
                 )
               : provider.loadMoreError != null
@@ -150,7 +159,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   compact: true,
                   retry: provider.retryLoadMore,
                 )
-              : const SizedBox(height: 16),
+              : SizedBox(height: 16.h),
         ),
       ],
     );

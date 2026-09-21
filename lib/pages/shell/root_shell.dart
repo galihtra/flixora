@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flixora/app/app_routes.dart';
 import 'package:flixora/resources/colors_app.dart';
@@ -19,7 +20,15 @@ class AppShell extends StatelessWidget {
     return Scaffold(
       body: child,
       bottomNavigationBar: NavigationBar(
-        height: 68,
+        height: (54.h + MediaQuery.textScalerOf(context).scale(12.sp)).clamp(
+          64.0,
+          100.0,
+        ),
+        labelBehavior:
+            MediaQuery.sizeOf(context).width < 360 ||
+                MediaQuery.textScalerOf(context).scale(12.sp) > 20
+            ? NavigationDestinationLabelBehavior.alwaysHide
+            : NavigationDestinationLabelBehavior.alwaysShow,
         backgroundColor: AppColors.navigation,
         indicatorColor: AppColors.accent.withValues(alpha: .16),
         selectedIndex: index,

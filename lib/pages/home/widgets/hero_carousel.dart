@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flixora/resources/layout_app.dart';
 import 'package:provider/provider.dart';
 import 'package:flixora/data/model/models.dart';
 import 'package:flixora/app/navigation.dart';
@@ -29,6 +31,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
   @override
   Widget build(BuildContext context) {
     final items = context.watch<HomeProvider>().heroes;
+    final heroHeight = AppLayout.heroHeight(context);
     if (items.isEmpty) {
       final state = context.read<HomeProvider>().state(
         Categories.popularMovies,
@@ -49,18 +52,18 @@ class _HeroCarouselState extends State<HeroCarousel> {
         );
       }
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: LoadingBlock(
-          width: MediaQuery.sizeOf(context).width - 40,
-          height: 420,
-          radius: 8,
+          width: MediaQuery.sizeOf(context).width - 40.w,
+          height: heroHeight,
+          radius: 8.r,
         ),
       );
     }
     return Column(
       children: [
         SizedBox(
-          height: 450,
+          height: heroHeight,
           child: PageView.builder(
             itemCount: items.length,
             controller: _controller,
@@ -68,16 +71,16 @@ class _HeroCarouselState extends State<HeroCarousel> {
             itemBuilder: (context, index) {
               final item = items[index];
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
+                padding: EdgeInsets.symmetric(horizontal: 5.w),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
                       Artwork(
                         path: item.posterPath ?? item.backdropPath,
                         width: double.infinity,
-                        height: 450,
+                        height: heroHeight,
                       ),
                       const DecoratedBox(
                         decoration: BoxDecoration(
@@ -94,9 +97,9 @@ class _HeroCarouselState extends State<HeroCarousel> {
                         ),
                       ),
                       Positioned(
-                        left: 22,
-                        right: 22,
-                        bottom: 23,
+                        left: 22.w,
+                        right: 22.w,
+                        bottom: 23.h,
                         child: Column(
                           children: [
                             Text(
@@ -104,28 +107,30 @@ class _HeroCarouselState extends State<HeroCarousel> {
                               textAlign: TextAlign.center,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 30,
+                              style: TextStyle(
+                                fontSize: 30.sp,
                                 fontWeight: FontWeight.w900,
                                 height: 1.05,
                                 shadows: [
                                   Shadow(
                                     color: AppColors.black87,
-                                    blurRadius: 16,
+                                    blurRadius: 16.r,
                                   ),
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(height: 8.h),
                             Text(
                               '${item.type.label.toUpperCase()}  •  ${item.year}  •  ★ ${item.rating.toStringAsFixed(1)}',
-                              style: const TextStyle(
-                                fontSize: 11,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 11.sp,
                                 fontWeight: FontWeight.w700,
-                                letterSpacing: 1.2,
+                                letterSpacing: 1.2.sp,
                               ),
                             ),
-                            const SizedBox(height: 17),
+                            SizedBox(height: 17.h),
                             Row(
                               children: [
                                 Expanded(
@@ -135,13 +140,19 @@ class _HeroCarouselState extends State<HeroCarousel> {
                                       item,
                                       'hero-${item.key}-$index',
                                     ),
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.info_outline_rounded,
+                                      size: 18.r,
                                     ),
-                                    label: const Text(AppStrings.details),
+                                    label: Text(
+                                      AppStrings.details,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontSize: 13.sp),
+                                    ),
                                   ),
                                 ),
-                                const SizedBox(width: 9),
+                                SizedBox(width: 9.w),
                                 Expanded(
                                   child: ListAction(
                                     item: item,
@@ -160,19 +171,19 @@ class _HeroCarouselState extends State<HeroCarousel> {
             },
           ),
         ),
-        const SizedBox(height: 13),
+        SizedBox(height: 13.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
             items.length,
             (index) => AnimatedContainer(
               duration: const Duration(milliseconds: 220),
-              width: active == index ? 20 : 5,
-              height: 5,
-              margin: const EdgeInsets.symmetric(horizontal: 3),
+              width: active == index ? 20.w : 5.w,
+              height: 5.h,
+              margin: EdgeInsets.symmetric(horizontal: 3.w),
               decoration: BoxDecoration(
                 color: active == index ? AppColors.accent : AppColors.white38,
-                borderRadius: BorderRadius.circular(3),
+                borderRadius: BorderRadius.circular(3.r),
               ),
             ),
           ),

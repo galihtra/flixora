@@ -58,6 +58,7 @@ class MediaItem {
       title: nonEmpty(json['title']) ?? AppStrings.untitled,
       posterPath: nonEmpty(json['posterPath']),
       rating: asDouble(json['rating']),
+      releaseDate: nonEmpty(json['releaseDate']),
     );
   }
 
@@ -67,5 +68,18 @@ class MediaItem {
     'title': title,
     'posterPath': posterPath,
     'rating': rating,
+    'releaseDate': releaseDate,
   };
+
+  MediaItem withReleaseDate(String value) => MediaItem(
+    id: id,
+    type: type,
+    title: title,
+    posterPath: posterPath,
+    backdropPath: backdropPath,
+    overview: overview,
+    rating: rating,
+    voteCount: voteCount,
+    releaseDate: value,
+  );
 }

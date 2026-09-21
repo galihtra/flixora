@@ -57,7 +57,8 @@ abstract final class AppStrings {
   static const noConnection = 'Check your internet connection and try again.';
   static const unknownError = 'Something went wrong. Please try again.';
   static const unknownShort = 'Something went wrong.';
-  static const tokenMissing = 'Add a TMDB token to load the catalog.';
+  static const tokenMissing =
+      'Set your TMDB token in config_app.dart to load the catalog.';
   static const season = 'Season';
   static const seasons = 'Seasons';
   static const episodes = 'Episodes';

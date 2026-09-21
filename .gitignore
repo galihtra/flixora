@@ -32,7 +32,7 @@ migrate_working_dir/
 .pub/
 /build/
 /apk/
-config/tmdb.local.json
+lib/resources/config_app.dart
 /coverage/
 
 # Symbolication related
@@ -42,6 +42,7 @@ app.*.symbols
 app.*.map.json
 
 # Android Studio will place build artifacts here
+/android/.kotlin/
 /android/app/debug
 /android/app/profile
 /android/app/release

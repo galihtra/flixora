@@ -1,5 +1,6 @@
-import 'package:flixora/resources/values_app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flixora/resources/layout_app.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flixora/app/app_routes.dart';
@@ -18,16 +19,27 @@ class WatchlistScreen extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20, 18, 20, 15),
+          Padding(
+            padding: EdgeInsets.fromLTRB(20.w, 18.h, 20.w, 15.h),
             child: Row(
               children: [
-                Text(
-                  AppStrings.myList,
-                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.w800),
+                Expanded(
+                  child: Text(
+                    AppStrings.myList,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 27.sp,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
                 ),
-                Spacer(),
-                Icon(Icons.bookmark_rounded, color: AppColors.accent),
+                SizedBox(width: 12.w),
+                Icon(
+                  Icons.bookmark_rounded,
+                  color: AppColors.accent,
+                  size: 24.r,
+                ),
               ],
             ),
           ),
@@ -44,15 +56,25 @@ class WatchlistScreen extends StatelessWidget {
                   )
                 : LayoutBuilder(
                     builder: (context, constraints) {
-                      final width = (constraints.maxWidth - 52) / 3;
+                      final columns = AppLayout.columns(constraints.maxWidth);
+                      final inset = AppLayout.pageInset;
+                      final gap = AppLayout.gridGap;
+                      final width =
+                          (constraints.maxWidth -
+                              2 * inset -
+                              (columns - 1) * gap) /
+                          columns;
                       return GridView.builder(
-                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 25),
+                        padding: EdgeInsets.fromLTRB(inset, 4.h, inset, 25.h),
                         itemCount: items.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 15,
-                          mainAxisExtent: width * AppValues.posterRatio + 40,
+                          crossAxisCount: columns,
+                          crossAxisSpacing: gap,
+                          mainAxisSpacing: AppLayout.rowGap,
+                          mainAxisExtent: AppLayout.posterTileHeight(
+                            context,
+                            width,
+                          ),
                         ),
                         itemBuilder: (context, index) => PosterCard(
                           item: items[index],

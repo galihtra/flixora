@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flixora/data/model/models.dart';
 import 'package:flixora/data/providers/home/home_provider.dart';
@@ -31,10 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: [
           const SliverToBoxAdapter(child: BrowseHeader(title: null)),
           const SliverToBoxAdapter(child: HeroCarousel()),
-          const SliverToBoxAdapter(child: SizedBox(height: 18)),
+          SliverToBoxAdapter(child: SizedBox(height: 18.h)),
           for (final category in Categories.home)
             SliverToBoxAdapter(child: CategoryRail(category: category)),
-          const SliverToBoxAdapter(child: SizedBox(height: 28)),
+          SliverToBoxAdapter(child: SizedBox(height: 28.h)),
         ],
       ),
     ),
