@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flixora/core/models.dart';
-import 'package:flixora/features/watchlist/watchlist_provider.dart';
+import 'package:flixora/data/model/models.dart';
+import 'package:flixora/data/providers/watchlist/watchlist_provider.dart';
 
 class MemoryStore implements WatchlistStore {
   String? value;

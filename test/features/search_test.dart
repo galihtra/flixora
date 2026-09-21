@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flixora/core/models.dart';
-import 'package:flixora/data/api.dart';
-import 'package:flixora/features/search/search_provider.dart';
+import 'package:flixora/data/model/models.dart';
+import 'package:flixora/data/repositories/media_repository.dart';
+import 'package:flixora/data/providers/search/search_provider.dart';
 
 class FakeRepository implements MediaRepository {
   final calls = <String>[];

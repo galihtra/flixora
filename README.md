@@ -40,7 +40,22 @@ If no token is provided, the app still opens and shows a service configuration m
 
 ## Architecture
 
-`lib/core` contains theme, copy, and models. `lib/data` owns the Dio client, retry and error mapping, and TMDB repository. Feature providers manage Home, catalog pagination, detail, search, and My List separately. `lib/ui` contains the screens and reusable cards, artwork, skeletons, and state views.
+The folder layout follows the reference pattern used by `turun`:
+
+```text
+lib/
+  main.dart                 # entry point only
+  app/                      # bootstrap, router, provider setup, navigation
+  resources/                # colors, strings, theme, configuration values
+  data/
+    model/                  # TMDB and local data models
+    providers/              # feature state (Provider / ChangeNotifier)
+    repositories/           # catalog and detail access
+    services/               # Dio client and API error mapping
+  pages/                    # screens and screen-specific widgets
+  components/               # reusable cards, headers, loading, state views
+  base_widgets/             # shared primitive UI widgets
+```
 
 API requests use a 10 s connection timeout, 20 s receive timeout, and 10 s send timeout. Transient GET failures receive up to two retries; rate limits honor Retry-After. Each category fails independently. Catalog data already loaded remains visible on refresh and pagination failure. The app has no permanent offline catalog; poster availability offline depends on the image cache.
 
@@ -49,7 +64,7 @@ API requests use a 10 s connection timeout, 20 s receive timeout, and 10 s send 
 ```sh
 flutter analyze
 flutter test
-flutter build apk --debug
+flutter build apk --debug --dart-define-from-file=config/tmdb.local.json
 ```
 
 The tests cover API error mapping, debounced search with stale response protection, and My List persistence.

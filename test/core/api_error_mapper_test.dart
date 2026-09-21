@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flixora/data/api.dart';
+import 'package:flixora/data/services/api_error_mapper.dart';
 
 void main() {
   final request = RequestOptions(path: '/movie/popular');
