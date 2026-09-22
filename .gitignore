@@ -32,7 +32,7 @@ migrate_working_dir/
 .pub/
 /build/
 /apk/
-lib/resources/config_app.dart
+/lib/app/config_app.dart
 /coverage/
 
 # Symbolication related
