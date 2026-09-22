@@ -24,9 +24,9 @@ All screenshots were taken from the app running on an Android emulator. Posters,
 |:---:|:---:|:---:|
 | <img src="docs/screenshots/movies.webp" alt="Movies catalog with several rails" width="220"> | <img src="docs/screenshots/category-see-all.webp" alt="Popular Movies grid after selecting See All" width="220"> | <img src="docs/screenshots/movie-genres.webp" alt="Movie genres bottom sheet" width="220"> |
 
-| Action Filter Results | Movie Details | Saved Movie |
-|:---:|:---:|:---:|
-| <img src="docs/screenshots/movies-action.webp" alt="Grid of movies filtered by Action genre" width="220"> | <img src="docs/screenshots/movie-detail.webp" alt="Movie details with rating, runtime, genres, and synopsis" width="220"> | <img src="docs/screenshots/movie-detail-saved.webp" alt="My List button after saving a movie" width="220"> |
+| Action Filter Results | Detail Shimmer | Movie Details | Saved Movie |
+|:---:|:---:|:---:|:---:|
+| <img src="docs/screenshots/movies-action.webp" alt="Grid of movies filtered by Action genre" width="220"> | <img src="docs/screenshots/shimmer_detail_movie.png" alt="Skeleton shimmer on movie details" width="220"> | <img src="docs/screenshots/movie-detail.webp" alt="Movie details with rating, runtime, genres, and synopsis" width="220"> | <img src="docs/screenshots/movie-detail-saved.webp" alt="My List button after saving a movie" width="220"> |
 
 ### Explore TV Shows
 
