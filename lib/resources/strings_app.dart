@@ -62,5 +62,7 @@ abstract final class AppStrings {
   static const season = 'Season';
   static const seasons = 'Seasons';
   static const episodes = 'Episodes';
+  static const allGenres = 'All';
+  static const filterByGenre = 'Filter by genre';
   static String openTitle(String title) => 'Open $title';
 }

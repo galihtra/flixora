@@ -84,6 +84,43 @@ class TmdbRepository implements MediaRepository {
     });
   }
 
+  @override
+  Future<List<Genre>> genres(
+    MediaType type, {
+    CancelToken? cancelToken,
+  }) async {
+    final path =
+        type == MediaType.movie ? '/genre/movie/list' : '/genre/tv/list';
+    final response = await _api.get(path, cancelToken: cancelToken);
+    final list = response['genres'];
+    if (list is! List) return [];
+    return list
+        .whereType<Map>()
+        .map((e) => Genre.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
+  }
+
+  @override
+  Future<MediaPage> byGenre(
+    MediaType type,
+    int genreId,
+    int page, {
+    CancelToken? cancelToken,
+  }) async {
+    final path =
+        type == MediaType.movie ? '/discover/movie' : '/discover/tv';
+    final response = await _api.get(
+      path,
+      query: {
+        'with_genres': genreId,
+        'page': page,
+        'sort_by': 'popularity.desc',
+      },
+      cancelToken: cancelToken,
+    );
+    return _page(response, page, (json) => MediaItem.fromJson(json, type));
+  }
+
   MediaPage _page(
     Map<String, dynamic> response,
     int fallbackPage,

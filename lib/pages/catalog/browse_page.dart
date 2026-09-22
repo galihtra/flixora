@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flixora/data/model/models.dart';
 import 'package:flixora/data/providers/home/home_provider.dart';
+import 'package:flixora/data/providers/genre/genre_provider.dart';
 import 'package:flixora/components/header/browse_header.dart';
-import 'package:flixora/pages/home/widgets/category_rail.dart';
-import 'package:flixora/resources/colors_app.dart';
 import 'package:flixora/resources/strings_app.dart';
+
+import 'category_rail.dart';
 
 class BrowseScreen extends StatefulWidget {
   const BrowseScreen({super.key, required this.type});
@@ -16,63 +16,69 @@ class BrowseScreen extends StatefulWidget {
 }
 
 class _BrowseScreenState extends State<BrowseScreen> {
+  Genre? _selectedGenre;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) context.read<HomeProvider>().ensureLoaded();
+      if (mounted) {
+        context.read<HomeProvider>().ensureLoaded();
+        context.read<GenreProvider>().ensureLoaded(widget.type);
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final categories = widget.type == MediaType.movie
-        ? Categories.movies
-        : Categories.tv;
+    final categories =
+        widget.type == MediaType.movie ? Categories.movies : Categories.tv;
+
     return SafeArea(
-      child: RefreshIndicator(
-        color: AppColors.accent,
-        onRefresh: () => context.read<HomeProvider>().refresh(),
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: BrowseHeader(
-                title: widget.type == MediaType.movie
-                    ? AppStrings.movies
-                    : AppStrings.tvShows,
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(20.w, 14.h, 20.w, 24.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.type == MediaType.movie
-                          ? AppStrings.moviesTagline
-                          : AppStrings.tvTagline,
-                      style: TextStyle(
-                        fontSize: 27.sp,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: -.7,
-                      ),
-                    ),
-                    SizedBox(height: 6.h),
-                    Text(
-                      AppStrings.exploreTmdb,
-                      style: TextStyle(color: AppColors.muted, fontSize: 14.sp),
-                    ),
-                  ],
+      child: Column(
+        children: [
+          BrowseHeader(
+            title: widget.type == MediaType.movie
+                ? AppStrings.movies
+                : AppStrings.tvShows,
+            type: widget.type,
+            selectedGenre: _selectedGenre,
+            onGenreSelected: (genre) {
+              setState(() => _selectedGenre = genre);
+            },
+          ),
+
+          Expanded(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 280),
+              switchInCurve: Curves.easeOut,
+              switchOutCurve: Curves.easeIn,
+              transitionBuilder: (child, animation) => FadeTransition(
+                opacity: animation,
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0, 0.03),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
                 ),
               ),
+              child: _selectedGenre == null
+                  ? CategoryRailView(
+                      key: const ValueKey('rails'),
+                      categories: categories,
+                      type: widget.type,
+                    )
+                  : GenreGridView(
+                      key: ValueKey('genre-${_selectedGenre!.id}'),
+                      genre: _selectedGenre!,
+                      type: widget.type,
+                    ),
             ),
-            for (final category in categories)
-              SliverToBoxAdapter(child: CategoryRail(category: category)),
-            SliverToBoxAdapter(child: SizedBox(height: 30.h)),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
+

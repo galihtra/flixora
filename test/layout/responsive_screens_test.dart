@@ -62,6 +62,20 @@ class LayoutRepository implements MediaRepository {
   }) async => MediaPage([movie], 1, 1);
 
   @override
+  Future<MediaPage> byGenre(
+    MediaType type,
+    int genreId,
+    int page, {
+    CancelToken? cancelToken,
+  }) async => MediaPage([movie], 1, 1);
+
+  @override
+  Future<List<Genre>> genres(
+    MediaType type, {
+    CancelToken? cancelToken,
+  }) async => [];
+
+  @override
   String? imageUrl(String? path, {bool backdrop = false}) => null;
 }
 

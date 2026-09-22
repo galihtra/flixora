@@ -5,6 +5,7 @@ import 'package:flixora/app/app_router.dart';
 import 'package:flixora/data/repositories/media_repository.dart';
 import 'package:flixora/data/providers/home/home_provider.dart';
 import 'package:flixora/data/providers/watchlist/watchlist_provider.dart';
+import 'package:flixora/data/providers/genre/genre_provider.dart';
 import 'package:flixora/resources/styles_app.dart';
 import 'package:flixora/resources/strings_app.dart';
 
@@ -18,6 +19,7 @@ class FlixoraApp extends StatefulWidget {
 
 class _FlixoraAppState extends State<FlixoraApp> {
   late final HomeProvider home = HomeProvider(widget.repository);
+  late final GenreProvider genre = GenreProvider(widget.repository);
   late final WatchlistProvider watchlist = WatchlistProvider(
     PreferencesWatchlistStore(),
     repository: widget.repository,
@@ -28,6 +30,7 @@ class _FlixoraAppState extends State<FlixoraApp> {
   void dispose() {
     router.dispose();
     home.dispose();
+    genre.dispose();
     watchlist.dispose();
     super.dispose();
   }
@@ -37,6 +40,7 @@ class _FlixoraAppState extends State<FlixoraApp> {
     providers: [
       Provider<MediaRepository>.value(value: widget.repository),
       ChangeNotifierProvider<HomeProvider>.value(value: home),
+      ChangeNotifierProvider<GenreProvider>.value(value: genre),
       ChangeNotifierProvider<WatchlistProvider>.value(value: watchlist),
     ],
     child: ScreenUtilInit(

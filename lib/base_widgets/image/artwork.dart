@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:flixora/data/repositories/media_repository.dart';
 import 'package:flixora/resources/colors_app.dart';
 
@@ -33,7 +34,11 @@ class Artwork extends StatelessWidget {
         width: width,
         height: height,
         fit: BoxFit.cover,
-        placeholder: (_, _) => const ColoredBox(color: AppColors.surface),
+        placeholder: (_, _) => Shimmer.fromColors(
+          baseColor: AppColors.surface,
+          highlightColor: AppColors.shimmerHighlight,
+          child: const ColoredBox(color: AppColors.surface),
+        ),
         errorWidget: (_, _, _) => _placeholder(),
       );
     }

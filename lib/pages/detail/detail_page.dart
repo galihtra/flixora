@@ -5,6 +5,7 @@ import 'package:flixora/app/navigation.dart';
 import 'package:flixora/data/model/models.dart';
 import 'package:flixora/base_widgets/image/artwork.dart';
 import 'package:flixora/components/loading/detail_skeleton.dart';
+import 'package:flixora/components/loading/loading_block.dart';
 import 'package:flixora/components/network_error/error_message.dart';
 import 'package:flixora/components/watchlist/list_action.dart';
 import 'package:flixora/data/providers/detail/detail_provider.dart';
@@ -219,10 +220,42 @@ class DetailScreen extends StatelessWidget {
                     ),
                   ],
                   if (provider.loading) ...[
-                    SizedBox(height: 18.h),
-                    const LinearProgressIndicator(
-                      color: AppColors.accent,
-                      backgroundColor: AppColors.surface,
+                    SizedBox(height: 25.h),
+                    Row(
+                      children: [
+                        LoadingBlock(width: 60.w, height: 26.h, radius: 4),
+                        SizedBox(width: 8.w),
+                        LoadingBlock(width: 80.w, height: 26.h, radius: 4),
+                        SizedBox(width: 8.w),
+                        LoadingBlock(width: 70.w, height: 26.h, radius: 4),
+                      ],
+                    ),
+                    if (item.overview.isEmpty) ...[
+                      SizedBox(height: 27.h),
+                      LoadingBlock(width: 100.w, height: 22.h),
+                      SizedBox(height: 9.h),
+                      LoadingBlock(width: screen.width - 40.w, height: 14.h),
+                      SizedBox(height: 6.h),
+                      LoadingBlock(width: screen.width - 40.w, height: 14.h),
+                      SizedBox(height: 6.h),
+                      LoadingBlock(width: screen.width * 0.7, height: 14.h),
+                    ],
+                    SizedBox(height: 25.h),
+                    LoadingBlock(width: 120.w, height: 22.h),
+                    SizedBox(height: 12.h),
+                    Row(
+                      children: [
+                        LoadingBlock(width: 70.w, height: 105.w, radius: 4),
+                        SizedBox(width: 12.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            LoadingBlock(width: 120.w, height: 18.h),
+                            SizedBox(height: 6.h),
+                            LoadingBlock(width: 80.w, height: 14.h),
+                          ],
+                        )
+                      ],
                     ),
                   ],
                   if (detail != null && detail.genres.isNotEmpty) ...[

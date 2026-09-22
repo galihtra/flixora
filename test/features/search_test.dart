@@ -29,6 +29,18 @@ class FakeRepository implements MediaRepository {
     CancelToken? cancelToken,
   }) => throw UnimplementedError();
   @override
+  Future<MediaPage> byGenre(
+    MediaType type,
+    int genreId,
+    int page, {
+    CancelToken? cancelToken,
+  }) => throw UnimplementedError();
+  @override
+  Future<List<Genre>> genres(
+    MediaType type, {
+    CancelToken? cancelToken,
+  }) => throw UnimplementedError();
+  @override
   String? imageUrl(String? path, {bool backdrop = false}) => null;
 }
 
