@@ -97,8 +97,6 @@ abstract final class AppConfig {
 }
 ```
 
-The `lib/app/config_app.dart` file is ignored by Git. The repository only stores an empty `lib/app/config_app.example.dart`. The token is compiled into the app, so do not commit your personal token. If the token is missing or invalid, the catalog will fail to load, but the local My List will remain accessible.
-
 ## Running the App
 
 Ensure your device ID is listed in `flutter devices`, then run:

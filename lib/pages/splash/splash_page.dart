@@ -1,3 +1,4 @@
+import 'package:flixora/resources/assets_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -95,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen>
         },
         child: Center(
           child: Image.asset(
-            'assets/gif/animation-logo.gif',
+            AppGifs.splashLogo,
             width: MediaQuery.of(context).size.width * 0.55,
             fit: BoxFit.contain,
           ),
