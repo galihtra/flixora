@@ -4,7 +4,7 @@ FLIXORA is a Flutter application for exploring movies and TV shows via [TMDB](ht
 
 ## App Demo
 
-[▶ Watch the FLIXORA demo on YouTube](https://www.youtube.com/shorts/WnZEUUhngl8)
+[![Watch the FLIXORA demo on YouTube](https://img.youtube.com/vi/WnZEUUhngl8/hqdefault.jpg)](https://www.youtube.com/shorts/WnZEUUhngl8)
 
 This screen recording demonstrates the flow from the splash screen and shimmer loading, Home, empty My List, catalog and **See All**, movie genre filters, viewing details and saving titles, TV show genre filters with season lists, search functionality, empty search results, and network interruption/recovery.
 
