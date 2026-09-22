@@ -23,10 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // Dismiss native splash — in-app animation takes over
     FlutterNativeSplash.remove();
-
-    // Hide status bar for full immersive experience
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     _controller = AnimationController(
@@ -34,7 +31,6 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(milliseconds: 5500),
     );
 
-    // Phase 1: fade in + scale up (0ms → 550ms)
     _fadeInAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
@@ -42,7 +38,6 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    // Slight scale punch like Netflix logo reveal
     _scaleAnim = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween(
@@ -61,7 +56,6 @@ class _SplashScreenState extends State<SplashScreen>
       TweenSequenceItem(tween: ConstantTween(1.0), weight: 80),
     ]).animate(_controller);
 
-    // Phase 2: fade out at the end (90% → 100%)
     _fadeOutAnim = Tween<double>(begin: 1.0, end: 0.0).animate(
       CurvedAnimation(
         parent: _controller,

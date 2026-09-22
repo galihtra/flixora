@@ -9,10 +9,11 @@ abstract final class AppTheme {
     scaffoldBackgroundColor: AppColors.background,
     colorScheme: const ColorScheme.dark(
       primary: AppColors.accent,
-      surface: AppColors.surface,
+      surface: AppColors.transparent,
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.background,
+      surfaceTintColor: Colors.transparent,
       foregroundColor: AppColors.white,
       titleTextStyle: TextStyle(
         color: AppColors.white,

@@ -31,6 +31,9 @@ class DetailRepository implements MediaRepository {
         releaseDate: id == 1 ? '2025-12-01' : '2026-07-31',
       ),
       genres: const [],
+      adult: false,
+      productionCompanies: const [],
+      seasonList: const [],
     );
   }
 

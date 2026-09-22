@@ -48,6 +48,9 @@ class LayoutRepository implements MediaRepository {
   }) async => MediaDetail(
     item: movie,
     genres: ['Science Fiction', 'Adventure', 'Drama'],
+    adult: false,
+    productionCompanies: const [],
+    seasonList: const [],
     runtime: 138,
   );
 

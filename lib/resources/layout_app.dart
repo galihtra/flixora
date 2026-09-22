@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flixora/resources/values_app.dart';
 
-/// Sizes shared by the catalog screens. Width decides column count; ScreenUtil
-/// adapts spacing and type, while the tile height reserves real text space.
 abstract final class AppLayout {
   static double get pageInset => 16.w.clamp(12.0, 28.0);
   static double get gridGap => 10.w.clamp(8.0, 18.0);

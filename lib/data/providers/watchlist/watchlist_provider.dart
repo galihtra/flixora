@@ -56,8 +56,6 @@ class WatchlistProvider extends ChangeNotifier {
     ready = true;
     notifyListeners();
 
-    // Older My List records did not store releaseDate. Fill only those records;
-    // the list remains visible while details are loaded in the background.
     for (final item
         in _items.values.where((item) => item.year == '—').toList()) {
       if (_disposed) return;
@@ -89,9 +87,7 @@ class WatchlistProvider extends ChangeNotifier {
       _items[item.key] = current.withReleaseDate(date);
       notifyListeners();
       await _save();
-    } catch (_) {
-      // Keep the saved item available offline and retry on the next app start.
-    }
+    } catch (_) {}
   }
 
   Future<void> _save() {

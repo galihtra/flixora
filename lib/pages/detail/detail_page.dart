@@ -87,23 +87,48 @@ class DetailScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 8.w,
-                                vertical: 4.h,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.accent,
-                                borderRadius: BorderRadius.circular(3.r),
-                              ),
-                              child: Text(
-                                item.type.label.toUpperCase(),
-                                style: TextStyle(
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w800,
-                                  letterSpacing: 1.sp,
+                            Row(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 8.w,
+                                    vertical: 4.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.accent,
+                                    borderRadius: BorderRadius.circular(3.r),
+                                  ),
+                                  child: Text(
+                                    item.type.label.toUpperCase(),
+                                    style: TextStyle(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 1.sp,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                if (detail?.adult == true) ...[
+                                  SizedBox(width: 8.w),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 8.w,
+                                      vertical: 4.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.red.shade800,
+                                      borderRadius: BorderRadius.circular(3.r),
+                                    ),
+                                    child: Text(
+                                      '18+',
+                                      style: TextStyle(
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w800,
+                                        letterSpacing: 1.sp,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ],
                             ),
                             SizedBox(height: 10.h),
                             Text(
@@ -244,6 +269,160 @@ class DetailScreen extends StatelessWidget {
                       height: 1.6,
                     ),
                   ),
+                  if (detail != null && detail.seasonList.isNotEmpty) ...[
+                    SizedBox(height: 25.h),
+                    Text(
+                      'Seasons',
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    SizedBox(height: 12.h),
+                    ...detail.seasonList.map(
+                      (s) => Padding(
+                        padding: EdgeInsets.only(bottom: 16.h),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(4.r),
+                              child: Artwork(
+                                path: s.posterPath,
+                                width: 70.w,
+                                height: 105.w,
+                              ),
+                            ),
+                            SizedBox(width: 12.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    s.name,
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4.h),
+                                  Wrap(
+                                    spacing: 8.w,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    children: [
+                                      if (s.seasonNumber != null)
+                                        Text(
+                                          'Season ${s.seasonNumber}',
+                                          style: TextStyle(
+                                            color: AppColors.muted,
+                                            fontSize: 12.sp,
+                                          ),
+                                        ),
+                                      if (s.episodeCount != null)
+                                        Text(
+                                          '${s.episodeCount} Eps',
+                                          style: TextStyle(
+                                            color: AppColors.muted,
+                                            fontSize: 12.sp,
+                                          ),
+                                        ),
+                                      if (s.voteAverage != null &&
+                                          s.voteAverage! > 0)
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.star_rounded,
+                                              color: AppColors.rating,
+                                              size: 14.r,
+                                            ),
+                                            SizedBox(width: 2.w),
+                                            Text(
+                                              s.voteAverage!.toStringAsFixed(1),
+                                              style: TextStyle(
+                                                color: AppColors.muted,
+                                                fontSize: 12.sp,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                    ],
+                                  ),
+                                  if (s.overview != null &&
+                                      s.overview!.isNotEmpty) ...[
+                                    SizedBox(height: 6.h),
+                                    Text(
+                                      s.overview!,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: AppColors.bodyText,
+                                        fontSize: 12.sp,
+                                        height: 1.4,
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                  if (detail != null &&
+                      detail.productionCompanies.isNotEmpty) ...[
+                    SizedBox(height: 25.h),
+                    Text(
+                      'Production',
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    SizedBox(height: 12.h),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
+                      child: Row(
+                        children: detail.productionCompanies.map((p) {
+                          return Padding(
+                            padding: EdgeInsets.only(right: 16.w),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (p.logoPath != null) ...[
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(4.r),
+                                    ),
+                                    padding: EdgeInsets.all(4.r),
+                                    child: Artwork(
+                                      path: p.logoPath,
+                                      width: 24.w,
+                                      height: 24.w,
+                                    ),
+                                  ),
+                                  SizedBox(width: 8.w),
+                                ],
+                                Text(
+                                  p.name,
+                                  style: TextStyle(
+                                    color: AppColors.muted,
+                                    fontSize: 13.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
                   SizedBox(height: 30.h),
                   const Divider(color: AppColors.white24),
                   SizedBox(height: 10.h),
@@ -251,6 +430,7 @@ class DetailScreen extends StatelessWidget {
                     AppStrings.discoverMore,
                     style: TextStyle(color: AppColors.muted, fontSize: 12.sp),
                   ),
+                  SizedBox(height: 10.h),
                 ],
               ),
             ),

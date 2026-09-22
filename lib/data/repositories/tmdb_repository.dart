@@ -23,9 +23,7 @@ class TmdbRepository implements MediaRepository {
       if (backdrops is List && backdrops.contains('w1280')) {
         _backdropSize = 'w1280';
       }
-    } catch (_) {
-      // The known TMDB image URL remains available if configuration cannot load.
-    }
+    } catch (_) {}
   }
 
   @override

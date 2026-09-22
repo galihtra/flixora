@@ -8,7 +8,6 @@ import 'package:flixora/app/config_app.dart';
 
 void bootstrap() {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // Keep native splash visible until our in-app splash takes over
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   final repository = TmdbRepository(ApiClient(token: AppConfig.tmdbToken));
   unawaited(repository.loadImageConfiguration());
