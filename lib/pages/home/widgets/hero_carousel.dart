@@ -52,7 +52,6 @@ class _HeroCarouselState extends State<HeroCarousel> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final items = context.watch<HomeProvider>().heroes;
@@ -162,9 +161,13 @@ class _HeroCarouselState extends State<HeroCarousel> {
                                   child: FilledButton.icon(
                                     style: FilledButton.styleFrom(
                                       minimumSize: Size(double.infinity, 38.h),
-                                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 12.w,
+                                      ),
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(6.r),
+                                        borderRadius: BorderRadius.circular(
+                                          6.r,
+                                        ),
                                       ),
                                     ),
                                     onPressed: () => openDetail(
@@ -214,7 +217,9 @@ class _HeroCarouselState extends State<HeroCarousel> {
               height: 5.h,
               margin: EdgeInsets.symmetric(horizontal: 3.w),
               decoration: BoxDecoration(
-                color: _provider.heroIndex == index ? AppColors.accent : AppColors.white38,
+                color: _provider.heroIndex == index
+                    ? AppColors.accent
+                    : AppColors.white38,
                 borderRadius: BorderRadius.circular(3.r),
               ),
             ),

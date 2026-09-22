@@ -1,4 +1,4 @@
-// ignore: constant_identifier_names
+// ignore_for_file: constant_identifier_names
 
 const String IMAGE_PATH = 'assets/images';
 const String ICON_PATH = 'assets/icons';

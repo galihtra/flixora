@@ -45,19 +45,20 @@ class _SplashScreenState extends State<SplashScreen>
     // Slight scale punch like Netflix logo reveal
     _scaleAnim = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween(begin: 0.80, end: 1.06)
-            .chain(CurveTween(curve: Curves.easeOut)),
+        tween: Tween(
+          begin: 0.80,
+          end: 1.06,
+        ).chain(CurveTween(curve: Curves.easeOut)),
         weight: 12,
       ),
       TweenSequenceItem(
-        tween: Tween(begin: 1.06, end: 1.0)
-            .chain(CurveTween(curve: Curves.easeInOut)),
+        tween: Tween(
+          begin: 1.06,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeInOut)),
         weight: 8,
       ),
-      TweenSequenceItem(
-        tween: ConstantTween(1.0),
-        weight: 80,
-      ),
+      TweenSequenceItem(tween: ConstantTween(1.0), weight: 80),
     ]).animate(_controller);
 
     // Phase 2: fade out at the end (90% → 100%)
@@ -94,10 +95,7 @@ class _SplashScreenState extends State<SplashScreen>
             opacity: _fadeOutAnim,
             child: Opacity(
               opacity: _fadeInAnim.value,
-              child: Transform.scale(
-                scale: _scaleAnim.value,
-                child: child,
-              ),
+              child: Transform.scale(scale: _scaleAnim.value, child: child),
             ),
           );
         },

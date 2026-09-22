@@ -34,10 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         processingText: 'Refreshing...',
         processedText: 'Done!',
         iconTheme: const IconThemeData(color: AppColors.accent),
-        textStyle: TextStyle(
-          color: AppColors.muted,
-          fontSize: 12.sp,
-        ),
+        textStyle: TextStyle(color: AppColors.muted, fontSize: 12.sp),
       ),
       onRefresh: () => context.read<HomeProvider>().refresh(),
       child: CustomScrollView(
